@@ -1,0 +1,53 @@
+<% content_for :title, 'Cold Storage' %>
+
+<div class="row">
+    <div class="col-xs-6">
+        <%= link_to 'Admin', admin_path %>
+        &gt;
+        Storage
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12" style="text-align: center;">
+        <p>This will add or remove a game to cold storage. They will not show up in other parts of the system, but are not fully culled.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-2"></div>
+    <div class="col-xs-8 glyphicon-custom-left" style="text-align:center;">
+        <input type="text" id="s-barcode" class="form-control" name="barcode" placeholder="Enter GAME barcode to store game." autocomplete="off" autofocus />
+        <span class="glyphicon glyphicon-tower form-control-feedback"></span>
+    </div>
+    <div class="col-xs-2"></div>
+</div>
+
+<div class="row" style="margin-top: 15px;">
+    <div class="col-xs-2"></div>
+    <div id="game-display" class="col-xs-8"></div>
+    <div class="col-xs-2"></div>
+</div>
+
+<div class="row">
+    <div class="col-xs-2"></div>
+    <div class="col-xs-8">
+        <p style="text-align: center;">
+            <span id="storage-count"><%= @stored_games_count %></span> games in storage.
+        </p>
+    </div>
+    <div class="col-xs-2"></div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('#s-barcode').change(function(){
+            $.get('/admin/storage', $(this).serialize(), null, 'script');
+        }).blur(function(){
+            // set focus to occur 10 ms later because blur event does not complete yet
+            setTimeout(function() {
+                $('#s-barcode').focus();
+            }, 0);
+        }).focus();
+    });
+</script>

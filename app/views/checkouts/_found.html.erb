@@ -1,0 +1,24 @@
+<% if @object %>
+    <div class="row">
+        <div class="col-xs-12" style="text-align: center;">
+            <h3>
+                You searched for <%= @object.is_a?(Attendee) ? 'an ATTENDEE' : 'a GAME' %>:
+            </h3>
+            <h3>
+                <%= @object.full_name %>
+            </h3>
+        </div>
+    </div>
+<% else %>
+    <div class="row" style="text-align: center;">
+        <% if params[:barcode] %>
+            <p>No information found.</p>
+        <% end %>
+    </div>
+<% end %>
+
+<br/>
+
+<% if @checkouts && @object %>
+    <%= render 'checkout_table', checkouts: @checkouts %>
+<% end %>

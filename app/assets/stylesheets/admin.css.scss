@@ -1,0 +1,26 @@
+// Place all the styles related to the admin controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#events-table {
+    td {
+        vertical-align: middle;
+    }
+}
+
+.btn-admin-box {
+    width: 250px;
+    .btn-admin-text {
+        text-align: right;
+        display: inline-block;
+    }
+}
+
+.tab-btn .report-tab-copy {
+    display: none;
+    float: right;
+    line-height: .8em;
+}
+
+.tab-btn.active .report-tab-copy {
+    display: block;
+}

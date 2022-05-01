@@ -1,0 +1,117 @@
+<% content_for :title, 'Metrics' %>
+
+<div class="row">
+    <div class="col-xs-12">
+        <%= link_to 'Admin', admin_path %>
+        &gt;
+        <%= link_to 'Events', events_path %>
+        &gt;
+        Library Stats for <%= @event.name %>
+    </div>
+</div>
+
+<div class="row">
+    <h3>
+        Library Stats for <%= @event.name %>
+        <span style="float: right; font-size: 16px;">
+            <%= @event.start_date %> to <%= @event.end_date %>
+        </span>
+    </h3>
+</div>
+
+<div class="row"><br/></div>
+
+<%= render 'admin/metrics/recent_event_summary' %>
+
+<%= render 'admin/metrics/games_tracking_summary' %>
+
+<div class="row" style="text-align: center;">
+    <div class="col-xs-12">
+        <%= render 'link', path: suggestions_path(event: @event), text: 'Suggestions', type: nil %>
+    </div>
+</div>
+
+<div class="row">
+    <ul class="nav nav-tabs tab-btns">
+        <li class="col-xs-4 tab-btn tab-1-btn active" style="cursor: pointer;">
+            <a>
+                Checkout Summary
+                <input type="button" class="btn btn-primary report-tab-copy" data-tab-id="tab-1" value="Copy" />
+            </a>
+        </li>
+        <li class="col-xs-4 tab-btn tab-2-btn" style="cursor: pointer;">
+            <a>
+                Checkouts by Title
+                <input type="button" class="btn btn-primary report-tab-copy" data-tab-id="tab-2" value="Copy" />
+            </a>
+        </li>
+        <li class="col-xs-4 tab-btn tab-3-btn" style="cursor: pointer;">
+            <a>
+                Checkouts by Publisher
+                <input type="button" class="btn btn-primary report-tab-copy" data-tab-id="tab-3" value="Copy" />
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="row tab tab-1 active">
+    <%= render 'admin/metrics/event_checkout_summary' %>
+</div>
+
+<div class="row tab tab-2" style="display: none;">
+    <%= render 'admin/metrics/checkouts_by_title' %>
+</div>
+
+<div class="row tab tab-3" style="display: none;">
+    <%= render 'admin/metrics/checkouts_by_publisher' %>
+</div>
+
+<script>
+    function setTab(tabClass, ele){
+        $('.row.tab.active').removeClass('active').hide();
+        $('.row.tab.' + tabClass).addClass('active').show();
+        $('.tab-btns').find('.active').removeClass('active');
+        ele.addClass('active');
+    }
+
+    $(document).ready(function(){
+        $('.tab-1-btn').click(function(){ setTab('tab-1', $(this)); });
+        $('.tab-2-btn').click(function(){ setTab('tab-2', $(this)); });
+        $('.tab-3-btn').click(function(){ setTab('tab-3', $(this)); });
+        $('.tab-btn .report-tab-copy').click(function(e){
+            var copyBtn = $(this),
+                tabId = copyBtn.data('tab-id'),
+                copyStr = '';
+
+            e.stopPropagation();
+
+            $('.row.tab.' + tabId).find('tr').each(function(i, o){
+                var lineStr = '',
+                    firstColumn = -1;
+                $(o).children('td, th').each(function(j, d){
+                    var dataText = $(d).text().trim();
+                    if(firstColumn == -1 && !dataText){
+                        return;
+                    } else {
+                        firstColumn = j;
+                    }
+                    if(j >= firstColumn){
+                        lineStr += dataText + "\t";
+                    }
+                });
+                copyStr += lineStr + "\n";
+            });
+
+            $('body').append('<textarea id="copy-text-area"></textarea>')
+            var textArea = $('#copy-text-area');
+            textArea.val(copyStr).select();
+            try{
+                document.execCommand('copy');
+            }catch(err){
+                alert("Unable to copy for some reason!");
+            }
+            textArea.remove('');
+        });
+    });
+
+</script>

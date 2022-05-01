@@ -1,0 +1,42 @@
+<% content_for :title, 'Cull Game' %>
+
+<div class="row">
+    <div class="col-xs-8">
+        <%= link_to 'Admin', admin_path %>
+        &gt;
+        Cull Game
+    </div>
+    <div class="col-xs-2"></div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12" style="text-align: center;">
+        <h3>
+            Cull Game
+        </h3>
+        <p>This will remove a game copy from the system.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-10 glyphicon-custom-left" style="text-align:center;">
+        <input type="text" id="cull-barcode" class="form-control" name="barcode" placeholder="Scan GAME's barcode here." autofocus />
+        <span class="glyphicon glyphicon-tower form-control-feedback"></span>
+    </div>
+    <div class="col-xs-1"></div>
+</div>
+
+<div id="game-display"></div>
+
+<script>
+    $(document).ready(function(){
+        $('#cull-barcode').change(function(){
+            $.get('/admin/cull', {"barcode": $(this).val()}, null, 'script');
+        });
+    });
+
+    function cull_valuable(barcode) {
+        $.get('/admin/cull', {"barcode": barcode, approve: true}, null, 'script');
+    }
+</script>
