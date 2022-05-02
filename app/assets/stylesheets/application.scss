@@ -272,18 +272,7 @@ path[data-event="shux"] {
     }
 }
 
-.glyphicon-table {
-    width: 100%;
-    text-align: center;
-}
 
-.glyphicon-custom-left .glyphicon {
-    right: auto;
-    left: 15px;
-}
-.glyphicon-custom-left input.form-control {
-    padding-left: 34px;
-}
 
 #suggest-form {
     align-items: center;
@@ -352,3 +341,29 @@ path[data-event="shux"] {
     padding: 10px;
     text-align: center;
 }
+
+.testse {
+    background: left image-url("search.svg") no-repeat;
+    padding: 10px;
+    background-position: left 10px top 5px;
+    background-size: contain;
+}
+
+input.form-control {
+    padding-left: 30px;
+}
+
+
+.glyphicon-table {
+    width: 100%;
+    text-align: center;
+}
+
+.glyphicon-custom-left .glyphicon {
+    right: auto;
+    left: 15px;
+}
+.glyphicon-custom-left input.form-control {
+    padding-left: 34px;
+}
+
