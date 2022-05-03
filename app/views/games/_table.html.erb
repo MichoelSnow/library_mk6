@@ -70,7 +70,9 @@
     <% end %>
 </table>
 
-<%= will_paginate @games %>
+<div class="digg_pagination">
+    <%= will_paginate @games %>
+</div>
 
 <% if @games.empty? %>
 <div class="row" style="text-align: center;">

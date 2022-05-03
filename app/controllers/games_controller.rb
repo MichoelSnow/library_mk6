@@ -7,7 +7,7 @@ class GamesController < ApplicationController
     @searchChecked = nil || params[:checked].present?
     @searchLoaned = nil || params[:loaned].present?
     @searchGroup = nil || params[:group]
-    @games = Game.search(@searchTitle, @searchPublisher, @searchValuable, @searchChecked, @searchLoaned, @searchGroup).joins(:title).order('lower(titles.title), games.barcode').paginate(per_page: 10, page: params[:page])
+    @games = Game.search(@searchTitle, @searchPublisher, @searchValuable, @searchChecked, @searchLoaned, @searchGroup).joins(:title).order('lower(titles.title), games.barcode').paginate(per_page: 25, page: params[:page])
   end
 
   def status
