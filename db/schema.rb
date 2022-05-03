@@ -104,25 +104,23 @@ ActiveRecord::Schema.define(version: 2022_04_28_023704) do
     t.datetime "updated_at"
   end
 
-  create_table "groups", id: false, force: :cascade do |t|
-    t.serial "id", null: false
+  create_table "groups", force: :cascade do |t|
     t.text "name"
     t.text "description"
     t.boolean "deleted", default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "loans", id: false, force: :cascade do |t|
-    t.serial "id", null: false
+  create_table "loans", force: :cascade do |t|
     t.integer "game_id"
     t.integer "group_id"
     t.datetime "check_out_time"
     t.datetime "return_time"
     t.boolean "closed", default: false
     t.integer "event_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "metadata", id: false, force: :cascade do |t|

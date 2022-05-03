@@ -15,7 +15,7 @@
  */
 
 @import "bootstrap";
-@import "font-awesome";
+
 
 #body-wrapper {
     max-width: 1050px;
@@ -320,20 +320,29 @@ path[data-event="shux"] {
     text-align: center;
 }
 
+
+
+.input-icons {
+    position: relative;
+}
+
 .input-icons i {
     position: absolute;
+    left: 30px;
+    top: 8px;
+    font-size:14px;
 }
-  
-.input-icons {
-    width: 100%;
-    margin-bottom: 10px;
+
+.input-icons input.form-control {
+    padding-left: 36px;
 }
+
   
 .icon {
-    padding: 10px;
-    color: green;
-    min-width: 50px;
-    text-align: center;
+    // padding: 10px;
+    color: black;
+    // min-width: 50px;
+    // text-align: center;
 }
   
 .input-field {
@@ -342,28 +351,22 @@ path[data-event="shux"] {
     text-align: center;
 }
 
-.testse {
-    background: left image-url("search.svg") no-repeat;
-    padding: 10px;
-    background-position: left 10px top 5px;
-    background-size: contain;
-}
 
 input.form-control {
     padding-left: 30px;
 }
 
 
-.glyphicon-table {
-    width: 100%;
-    text-align: center;
-}
+// .glyphicon-table {
+//     width: 100%;
+//     text-align: center;
+// }
 
-.glyphicon-custom-left .glyphicon {
-    right: auto;
-    left: 15px;
-}
-.glyphicon-custom-left input.form-control {
-    padding-left: 34px;
-}
+// .glyphicon-custom-left .glyphicon {
+//     right: auto;
+//     left: 15px;
+// }
+// .glyphicon-custom-left input.form-control {
+//     padding-left: 34px;
+// }
 

@@ -3,7 +3,7 @@
 <form id="g-search">
   <div class="container">
     <div class="row gx-5">
-      <div class="col-4">
+      <div class="col-6 input-icons">
         <input
           type="text"
           class="form-control"
@@ -13,52 +13,60 @@
           value="<%= @searchTitle %>"
           autofocus
         >
+        <i class="bi-search"></i>
       </div>
-      <div class="col-4">
+      <div class="col-4 input-icons">
         <input
           type="text"
           class="form-control"
-          placeholder="Last name"
-          aria-label="Last name"
+          name="publisher"
+          placeholder="Publisher"
+          value="<%= @searchPublisher %>"
         >
+        <i class="bi-search"></i>
       </div>
       <div class="col-2">
-        <input type="submit" class="form-control" value="Search"/>
+        <button type="submit" class="btn btn-primary form-control">Search</button>
       </div>
     </div>
   </div>
+
   <div class="col-xs-12">
-    <div class="btn-group-toggle search-btn" data-toggle="buttons">
-      <label class="btn btn-default <%= @searchValuable ? "active" : "" %>">
-        <input
-          type="checkbox"
-          id="g-search-valuable"
-          name="valuable"
-          <%= @searchValuable ? "checked" : "" %>
-        >
-        Valuable?
+    <div class="btn-group search-btn" data-toggle="buttons">
+
+      <input
+        type="checkbox"
+        id="g-search-valuable"
+        name="valuable"
+        class="btn-check"
+        autocomplete="off"
+        <%= @searchValuable ? "checked" : "" %>
+      >
+      <label class="btn btn-outline-secondary" for="g-search-valuable">Valuable?
       </label>
     </div>
     <div class="btn-group-toggle search-btn" data-toggle="buttons">
-      <label class="btn btn-default <%= @searchChecked ? "active" : "" %>">
-        <input
-          type="checkbox"
-          id="g-search-checked"
-          name="checked"
-          <%= @searchChecked ? "checked" : "" %>
-        >
-        Checked out?
+      <input
+        type="checkbox"
+        id="g-search-checked"
+        name="checked"
+        class="btn-check"
+        autocomplete="off"
+        <%= @searchChecked ? "checked" : "" %>
+      >
+      <label class="btn btn-outline-secondary" for="g-search-checked">Checked Out?
       </label>
     </div>
-    <div class="btn-group-toggle search-btn" data-toggle="buttons">
-      <label class="btn btn-default <%= @searchLoaned ? "active" : "" %>">
-        <input
-          type="checkbox"
-          id="g-search-loaned"
-          name="loaned"
-          <%= @searchLoaned ? "checked" : "" %>
-        >
-        Loaned out?
+        <div class="btn-group-toggle search-btn" data-toggle="buttons">
+      <input
+        type="checkbox"
+        id="g-search-loaned"
+        name="loaned"
+        class="btn-check"
+        autocomplete="off"
+        <%= @searchLoaned ? "checked" : "" %>
+      >
+      <label class="btn btn-outline-secondary" for="g-search-loaned">Loaned Out?
       </label>
     </div>
     <div

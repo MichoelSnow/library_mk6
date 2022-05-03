@@ -1,0 +1,139 @@
+<div class="row setup-msg text-center">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-10">
+        <h3>Welcome to setup for <%= Event.current.formatted_name %>!</h3>
+        <p>Please complete these steps to set up the Tabletop Library. Check off each item once it's complete.</p>
+    </div>
+</div>
+
+<div class="row complete-msg" style="display: none;">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-10" style="text-align: center;">
+        <h4>All steps complete! Please refresh the page to begin checking out games.</h4>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 10px;">
+    <div class="col-xs-1 col-sm-2 col-md-3"></div>
+    <div class="col-xs-8 col-sm-6 col-md-5">
+        <h5 style="margin-top: 0;">Configure computer timezones.</h5>
+        <small class="read-details rd-show">
+            Show Details
+        </small>
+        <small class="read-details rd-hide" style="display: none;">
+            Hide Details
+        </small>
+        <p class="setup-details" style="padding: 15px; display: none;">
+            Set the time of the library server computer to the local time. This only needs to be done for the server computer, however, it's helpful for librarians if all computers in the library have the correct time.
+        </p>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-3">
+        <% if @current_event.setup_computer_tz.nil? %>
+            <div class="setup-check-box" data-setup-tag="<%= Event::SETUP_COMPUTER_TZ %>"></div>
+        <% else %>
+            <div class="setup-check-box glyphicon glyphicon-ok checked"></div>
+        <% end %>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 10px;">
+    <div class="col-xs-1 col-sm-2 col-md-3"></div>
+    <div class="col-xs-8 col-sm-6 col-md-5">
+        <h5 style="margin-top: 0;">Scan all games at Setup.</h5>
+        <small class="read-details rd-show">
+            Show Details
+        </small>
+        <small class="read-details rd-hide" style="display: none;">
+            Hide Details
+        </small>
+        <p class="setup-details" style="padding: 15px; display: none;">
+            Navigate to <a href="/admin/setup">Setup Scanning</a> under the Admin tab. Scan all games in the library on this page after they've been unpacked.
+            <br/><br/>
+            More details on this step can be found in the <a href="ReadMe.html">ReadMe</a> document under the section titled <a href="/ReadMe.html#scan-through-setup">Scanning games through Setup</a>.
+        </p>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-3">
+        <% if @current_event.setup_scan_games.nil? %>
+            <div class="setup-check-box" data-setup-tag="<%= Event::SETUP_SCAN_GAMES %>"></div>
+        <% else %>
+            <div class="setup-check-box glyphicon glyphicon-ok checked"></div>
+        <% end %>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 10px;">
+    <div class="col-xs-1 col-sm-2 col-md-3"></div>
+    <div class="col-xs-8 col-sm-6 col-md-5">
+        <h5 style="margin-top: 0;">Setup library server connections.</h5>
+        <small class="read-details rd-show">
+            Show Details
+        </small>
+        <small class="read-details rd-hide" style="display: none;">
+            Hide Details
+        </small>
+        <p class="setup-details" style="padding: 15px; display: none;">
+            Open the <a href="ReadMe.html">ReadMe</a> document and follow the steps under <a href="/ReadMe.html#linking-other-laptops">Linking other laptops to the server for use</a>.
+        </p>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-3">
+        <% if @current_event.setup_library_server.nil? %>
+            <div class="setup-check-box" data-setup-tag="<%= Event::SETUP_LIBRARY_SERVER %>"></div>
+        <% else %>
+            <div class="setup-check-box glyphicon glyphicon-ok checked"></div>
+        <% end %>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 10px;">
+    <div class="col-xs-1 col-sm-2 col-md-3"></div>
+    <div class="col-xs-8 col-sm-6 col-md-5">
+        <h5 style="margin-top: 0;">Add any new games that have been donated.</h5>
+        <small class="read-details rd-show">
+            Show Details
+        </small>
+        <small class="read-details rd-hide" style="display: none;">
+            Hide Details
+        </small>
+        <p class="setup-details" style="padding: 15px; display: none;">
+            Navigate to <a href="/admin/new_game">Add New Game</a> under the Admin tab to add new games. Remember to apply a barcode, and clear scotch tape on top of the barcode.
+        </p>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-3">
+        <% if @current_event.setup_add_new_games.nil? %>
+            <div class="setup-check-box" data-setup-tag="<%= Event::SETUP_ADD_NEW_GAMES %>"></div>
+        <% else %>
+            <div class="setup-check-box glyphicon glyphicon-ok checked"></div>
+        <% end %>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('.read-details,.hide-details').click(function(){
+            $(this).toggle();
+            $(this).siblings('.read-details.rd-hide,.read-details.rd-show').toggle();
+            $(this).siblings('.setup-details').slideToggle(150);
+        });
+
+        $('.setup-check-box').click(function(){
+            var _me = $(this),
+                dataTag = _me.data('setup-tag');
+            if(dataTag){
+                $.ajax({
+                    url: '/setup/tag',
+                    data: { tag: dataTag },
+                    method: 'put',
+                    success: function(){
+                        _me.addClass('glyphicon').addClass('glyphicon-ok').addClass('checked').data('setup-tag', '');
+
+                        var checked = $('.setup-check-box.checked').length;
+                        if(checked >= 4){
+                            $('.setup-msg').slideUp();
+                            $('.complete-msg').slideDown();
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>

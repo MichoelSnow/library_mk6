@@ -1,0 +1,27 @@
+<tr class="display-event-row" data-event-id="<%= event.id %>">
+    <td class="col-xs-3">
+        <%= event.name %>
+    </td>
+    <td class="col-xs-2">
+        <%= event.location %>
+    </td>
+    <td class="col-xs-2">
+        <%= event.start_date %>
+    </td>
+    <td class="col-xs-2">
+        <%= event.end_date %>
+    </td>
+    <td class="col-xs-1" style="text-align: center;">
+        <%= event.utc_offset %>
+    </td>
+    <td class="col-xs-2">
+        <% if !Event.is_live && event.is_current %>
+            <input type="button" class="btn btn-default edit-event-btn" value="Edit" />
+            <a href="<%= metrics_path(event: event) %>" style="text-decoration: none;">
+                <button class="btn btn-default metric-event-btn" data-event="<%= event.short_name%>" style="color: #FFF;">
+                    Metrics
+                </button>
+            </a>
+        <% end %>
+    </td>
+</tr>

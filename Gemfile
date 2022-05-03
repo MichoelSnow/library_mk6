@@ -58,5 +58,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "bcrypt", "~> 3.1"
 gem "bootstrap", "~>5.1"
 gem 'will_paginate'
-gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.8'
 gem 'erb-formatter'
