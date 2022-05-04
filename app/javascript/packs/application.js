@@ -58,7 +58,7 @@ $(document).ready(function(){
 });
 
 function pollStatus(){
-    $.get('/status').success(function(response){
+    $.get('/status').done(function(response){
         $('#total-games').text(response.total_games);
         $('#open-checkouts').text(response.open_checkouts);
         $('#longest-open-checkout').text(response.longest_open_checkout);

@@ -1,5 +1,5 @@
 <% content_for :title, 'Events Mgmt' %>
-
+<%= javascript_pack_tag 'my_js' %>
 <div class="row">
     <div class="col-xs-6">
         <%= link_to 'Admin', admin_path %>
@@ -44,6 +44,7 @@
 </table>
 
 <script>
+
     $(document).ready(function(){
         $('#add-event-btn').click(function(){
             if($('#events-table').find('tr[data-event-id=""]').length <= 0){
