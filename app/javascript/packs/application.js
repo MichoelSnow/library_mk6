@@ -12,19 +12,24 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap-sprockets
 //= require_tree ../../../vendor/assets/javascripts
 //= require_tree .
 
 
+require("@popperjs/core")
+require("packs/bootstrapNotifications")
+
+import "bootstrap"
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
 var bc_regex = /^[a-z0-9]{3,13}$/i;
 
 const DEFAULT_ERROR = 'Something went wrong. Please submit a suggestion with a description of what you were trying to do, so our dev team can look into it.';
 
-$(document).ready(function(){
+$(function(){
 
+    console.log("application_js")
+    
     $.ajaxSetup({
         headers: {
             clientOffset: ((new Date()).getTimezoneOffset() / 60)
@@ -116,6 +121,8 @@ function postSuggestion(){
         input.parent().addClass('has-error');
     }
 }
+
+export default bc_regex;
 
 // Original Code
 // import Rails from "@rails/ujs"

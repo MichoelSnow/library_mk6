@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <%= link_to 'Loaner Groups', loaners_path %>
+        <%= link_to 'Loaner Groups', loaners_path, class:"text-decoration-none" %>
         &gt;
         Loan games to group "<%= @group.name %>"
     </div>
@@ -12,9 +12,9 @@
 
 <div class="row" id="l-row">
     <div class="col-xs-3"></div>
-    <div class="col-xs-6 glyphicon-custom-left">
+    <div class="col-xs-6 input-icons">
         <input type="text" id="l-barcode" class="form-control" placeholder="Enter GAME barcode to loan or return game to <%= @group.name %>." autofocus />
-        <span class="glyphicon glyphicon-tower form-control-feedback"></span>
+        <i class="bi bi-dice-3-fill"></i>
         <div id="loans-container-container">
             <div id="loans-container" class="panel-group" style="padding: 15px 15px;" role="tablist" aria-multiselectable="true">
                 <% @loans_by_title_id.each do |title_id, loans| %>
@@ -50,10 +50,11 @@
 </div>
 
 <script>
+    
     $(document).ready(function(){
         $('#l-barcode').change(function(){
             var gBarcode = $(this).val();
-
+            console.log(gBarcode)
             if(!bc_regex.test(gBarcode)){
                 $.notify('Invalid barcode format! Barcode should be at least 7 characters long and only contain alphanumeric characters.', 'warning', 5000);
                 $(this).val('');

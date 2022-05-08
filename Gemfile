@@ -59,3 +59,4 @@ gem "bcrypt", "~> 3.1"
 gem "bootstrap", "~>5.1"
 gem 'will_paginate'
 gem 'erb-formatter'
+

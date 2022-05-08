@@ -61,7 +61,7 @@
             </td>
             <td class="col-xs-2" style="text-align: center;">
                 <% if game.loaned? %>
-                    <a href="<%= group_path(game.current_loan.group) %>">
+                    <a href="<%= group_path(game.current_loan.group) %>" class="text-decoration-none">
                         <%= game.current_loan.group.name %>
                     </a>
                 <% end %>
@@ -78,7 +78,7 @@
 <div class="row" style="text-align: center;">
     <b>No games found!</b>
     <div class="col-xs-12">
-        <a id="suggestBtn" class="btn btn-default" style="margin: 5px;">
+        <a id="suggestBtn" class="btn btn-outline-secondary" style="margin: 5px;">
             Suggest adding this title to the library?
         </a>
     </div>

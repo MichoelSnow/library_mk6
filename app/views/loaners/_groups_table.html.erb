@@ -1,16 +1,16 @@
 <table class="table table-striped">
     <tr>
-        <th class="col-xs-3">
+        <th class="col-3">
             Group
         </th>
-        <th class="col-xs-5">
+        <th class="col-5">
             Description
         </th>
-        <th class="col-xs-1">
+        <th class="col-1">
             Games
         </th>
-        <th class="col-xs-2"></th>
-        <th class="col-xs-1"></th>
+        <th class="col-2"></th>
+        <th class="col-1"></th>
     </tr>
     <% @groups.each do |group| %>
         <%= render partial: 'loaners/group', locals: { group: group } %>
