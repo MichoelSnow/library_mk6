@@ -1,17 +1,21 @@
 import bc_regex from "./application.js";
-
+import { Modal } from "bootstrap";
 
 $(function () {
-  // var alertPlaceholder = $('#liveAlertPlaceholder')
-
-
+  var newAttendee = new Modal(document.getElementById("a-form"), {
+    keyboard: false,
+  });
   // Make a call to /return when a new barcode is entered.
-  $("#g-barcode").on('change', function () {
+  $("#g-barcode").on("change", function () {
     var barcode_val = $(this).val();
 
     if (!bc_regex.test(barcode_val)) {
-      $.notify('Invalid barcode format! Barcode should be at least 3 characters long and only contain alphanumeric characters.', 'warning', 5000);
-      $(this).val('');
+      $.notify(
+        "Invalid barcode format! Barcode should be at least 3 characters long and only contain alphanumeric characters.",
+        "warning",
+        5000
+      );
+      $(this).val("");
       return;
     }
     gameBarcode(false);
@@ -29,7 +33,7 @@ $(function () {
         } else {
           $("#g-name").text("Checking out: " + response.game);
           $("#a-row").show();
-          $("#a-barcode").focus();
+          $("#a-barcode").trigger("focus");
         }
       })
       .fail(function () {
@@ -39,7 +43,7 @@ $(function () {
   });
 
   // Make a call to /attendee/status when a new barcode is entered.
-  $("#a-barcode").on('change', function () {
+  $("#a-barcode").on("change", function () {
     var barcode_val = $(this).val();
 
     if (!bc_regex.test(barcode_val)) {
@@ -54,12 +58,12 @@ $(function () {
     attendeeBarcode(false);
 
     $.get("attendee/status", { barcode: barcode_val })
-      .success(function (response) {
+      .done(function (response) {
         $.post("checkout/new", {
           g_barcode: $("#g-barcode").val(),
           a_barcode: barcode_val,
         })
-          .success(function (response) {
+          .done(function (response) {
             if (response.errors) {
               $.each(response.errors, function (k, v) {
                 $.notify(v, "danger");
@@ -72,16 +76,19 @@ $(function () {
               $.notify(response.approval, "success", 8000);
             }
           })
-          .error(function () {
+          .fail(function () {
             $.notify(DEFAULT_ERROR, "danger");
           })
-          .complete(function () {
+          .always(function () {
             attendeeBarcode(true);
           });
       })
-      .error(function (response) {
+      .fail(function (response) {
         if (response.status == 400) {
-          $("#a-form").modal();
+          // var myModal = new bootstrap.Modal(document.getElementById('a-form'), options)
+          // $("#a-form").show();
+          newAttendee.show();
+          // $("#a-form").modal();
         } else {
           $.notify(DEFAULT_ERROR, "danger");
           attendeeBarcode(true);
@@ -112,6 +119,7 @@ $(function () {
   // Submit new attendee information. On success, hide form and display new info.
   var saveAttendee = function () {
       var data = $("#a-form").find(".form-control").serializeArray();
+      console.log(data);
       data.push({
         name: "barcode",
         value: $("#a-barcode").val(),
@@ -123,14 +131,14 @@ $(function () {
         .find(".glyphicon")
         .hide();
       $.post("attendee/new", data)
-        .success(function (response) {
+        .done(function (response) {
           if (response.attendee) {
             $("#a-form").modal("hide");
             $.post("checkout/new", {
               g_barcode: $("#g-barcode").val(),
               a_barcode: $("#a-barcode").val(),
             })
-              .success(function (response) {
+              .done(function (response) {
                 if (response.errors) {
                   $.each(response.errors, function (k, v) {
                     $.notify(v, "danger");
@@ -143,10 +151,10 @@ $(function () {
                   $.notify(response.approval, "success", 8000);
                 }
               })
-              .error(function () {
+              .fail(function () {
                 $.notify(DEFAULT_ERROR, "danger");
               })
-              .complete(function () {
+              .always(function () {
                 attendeeBarcode(true);
               });
           } else {
@@ -159,7 +167,9 @@ $(function () {
             });
           }
         })
-        .error(function () {});
+        .fail(function () {
+          console.log("Post Failed")
+        });
     },
     saveAttendeeByEnter = function (e) {
       if (e.keyCode === 13 && $("#a-form").is(":visible")) {
@@ -169,20 +179,20 @@ $(function () {
   $("#a-form-save").on("click", saveAttendee);
   $("#a-form").find('input[type="text"]').keypress(saveAttendeeByEnter);
 
-  $("#find-barcode").change(function () {
+  $("#find-barcode").on("change", function () {
     $.get("/find", $(this).serialize(), null, "script");
   });
 
-  $("#found-div").delegate(".return-game", "click", function () {
+  $("#found-div").on(".return-game", "click", function () {
     var _me = $(this);
     $.post("/return", { co_id: _me.data("checkout-id") })
-      .success(function (response) {
+      .done(function (response) {
         $.notify("Successfully returned " + response.game + "!", 5000);
         var cell = _me.closest(".col-xs-2");
         cell.html(response.time);
         cell.next().html("RETURNED");
       })
-      .error(function () {
+      .fail(function () {
         $.notify(DEFAULT_ERROR, "danger");
       });
   });

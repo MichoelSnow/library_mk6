@@ -17,10 +17,11 @@
 
 
 require("@popperjs/core")
-require("packs/bootstrapNotifications")
+require("utilities/bootstrapNotifications")
+require("utilities/pTipping")
 
 import "bootstrap"
-import 'bootstrap-icons/font/bootstrap-icons.css'
+import "bootstrap-icons/font/bootstrap-icons.css"
 
 var bc_regex = /^[a-z0-9]{3,13}$/i;
 
@@ -121,6 +122,21 @@ function postSuggestion(){
         input.parent().addClass('has-error');
     }
 }
+
+// Add in bootstrap tooltips
+import * as bootstrap from 'bootstrap'
+document.addEventListener("DOMContentLoaded", function(event) {
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+      return new bootstrap.Popover(popoverTriggerEl)
+    })
+  
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+  });
+
 
 export default bc_regex;
 
